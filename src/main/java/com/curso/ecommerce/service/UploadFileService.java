@@ -6,8 +6,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.io.File;
 
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+@Service
 public class UploadFileService {
 	
 	private String folder = "images//";
@@ -25,5 +27,6 @@ public class UploadFileService {
 	public void DeleteImage(String nombre) {
 		String ruta = "images//";
 		File file = new File(ruta + nombre);
+		file.delete();
 	}
 }
