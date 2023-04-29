@@ -67,4 +67,10 @@ public class ProductoController {
 		productoService.Update(producto);
 		return "redirect:/productos";
 	}
+	
+	@GetMapping("/delete/{id}")
+	public String DeleteProduct(@PathVariable Integer id) {
+		productoService.Delete(id);
+		return "redirect:/productos";
+	}
 }
