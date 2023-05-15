@@ -1,5 +1,7 @@
 package com.curso.ecommerce.controller;
 
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.curso.ecommerce.service.ProductoService;
+import com.curso.ecommerce.model.Producto;
 
 @Controller
 @RequestMapping("/")
@@ -20,16 +23,23 @@ public class HomeController {
 	@Autowired
 	private ProductoService productoService;
 	
+	//Vista principal - Home
 	@GetMapping("")
 	public String home(Model model) {
 		model.addAttribute("productos", productoService.FindAll());
 		return "usuario/home";
 	}
 	
+	//Vista detalles del producto:
 	@GetMapping("/detallesProducto/{id}")
-	public String ProductoHome(@PathVariable Integer id) {
+	public String ProductoHome(@PathVariable Integer id, Model model) {
 		
 		log.info("Id producto enviado como parametro {}",id);
+		
+		Producto producto = new Producto();
+		Optional<Producto> productoOptional = productoService.get(id);
+		producto = productoOptional.get();
+		model.addAttribute("producto", producto);
 		
 		return "usuario/productohome";
 	}
